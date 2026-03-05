@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - मेरी दुकान</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🛍️ मेरी दुकान</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">🏠 Home</a></li>
+                    <li><a href="shop.html">🛍 Shop</a></li>
+                    <li><a href="cart.html" class="active">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="user.html">👤 Account</a></li>
+                    <li><a href="admin.html">🔐 Admin</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="page-title">🛒 Shopping Cart</h1>
+
+            <div class="cart-layout">
+                <!-- Cart Items -->
+                <div class="cart-items">
+                    <div id="cart-empty" class="cart-empty" style="display: none;">
+                        <div class="empty-cart-icon">🛒</div>
+                        <h2>Your cart is empty</h2>
+                        <p>Looks like you haven't added anything to your cart yet.</p>
+                        <a href="shop.html" class="btn-primary">Continue Shopping</a>
+                    </div>
+
+                    <div id="cart-items-container">
+                        <!-- Cart Item 1 -->
+                        <div class="cart-item" data-product-id="1">
+                            <div class="item-image">
+                                <img src="images/product1.jpg" alt="Smartphone">
+                            </div>
+                            <div class="item-details">
+                                <h3>Smartphone Pro Max</h3>
+                                <p class="item-variant">Color: Black, Storage: 256GB</p>
+                                <p class="item-price">₹15,999</p>
+                            </div>
+                            <div class="item-quantity">
+                                <div class="quantity-controls">
+                                    <button onclick="updateQuantity(1, -1)">-</button>
+                                    <input type="number" value="1" min="1" max="10" id="qty-1">
+                                    <button onclick="updateQuantity(1, 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="item-total">
+                                <span class="total-price">₹15,999</span>
+                                <button class="btn-remove" onclick="removeFromCart(1)">🗑️ Remove</button>
+                            </div>
+                        </div>
+
+                        <!-- Cart Item 2 -->
+                        <div class="cart-item" data-product-id="2">
+                            <div class="item-image">
+                                <img src="images/product2.jpg" alt="Laptop">
+                            </div>
+                            <div class="item-details">
+                                <h3>Gaming Laptop</h3>
+                                <p class="item-variant">Color: Silver, RAM: 16GB</p>
+                                <p class="item-price">₹35,999</p>
+                            </div>
+                            <div class="item-quantity">
+                                <div class="quantity-controls">
+                                    <button onclick="updateQuantity(2, -1)">-</button>
+                                    <input type="number" value="1" min="1" max="10" id="qty-2">
+                                    <button onclick="updateQuantity(2, 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="item-total">
+                                <span class="total-price">₹35,999</span>
+                                <button class="btn-remove" onclick="removeFromCart(2)">🗑️ Remove</button>
+                            </div>
+                        </div>
+
+                        <!-- Cart Item 3 -->
+                        <div class="cart-item" data-product-id="3">
+                            <div class="item-image">
+                                <img src="images/product3.jpg" alt="Headphones">
+                            </div>
+                            <div class="item-details">
+                                <h3>Wireless Headphones</h3>
+                                <p class="item-variant">Color: Black</p>
+                                <p class="item-price">₹1,999</p>
+                            </div>
+                            <div class="item-quantity">
+                                <div class="quantity-controls">
+                                    <button onclick="updateQuantity(3, -1)">-</button>
+                                    <input type="number" value="2" min="1" max="10" id="qty-3">
+                                    <button onclick="updateQuantity(3, 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="item-total">
+                                <span class="total-price">₹3,998</span>
+                                <button class="btn-remove" onclick="removeFromCart(3)">🗑️ Remove</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cart Actions -->
+                    <div class="cart-actions">
+                        <button class="btn-secondary" onclick="clearCart()">Clear Cart</button>
+                        <a href="shop.html" class="btn-secondary">Continue Shopping</a>
+                        <button class="btn-primary" onclick="updateCart()">Update Cart</button>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2>Order Summary</h2>
+                    
+                    <div class="summary-row">
+                        <span>Subtotal (3 items)</span>
+                        <span id="subtotal">₹55,996</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span id="shipping">FREE</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Tax (GST 18%)</span>
+                        <span id="tax">₹10,079</span>
+                    </div>
+
+                    <div class="summary-row discount-row">
+                        <span>Discount</span>
+                        <span id="discount">-₹2,000</span>
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="summary-row total-row">
+                        <span>Total</span>
+                        <span id="total">₹64,075</span>
+                    </div>
+
+                    <!-- Promo Code -->
+                    <div class="promo-section">
+                        <div class="promo-input">
+                            <input type="text" id="promo-code" placeholder="Enter promo code">
+                            <button class="btn-apply" onclick="applyPromo()">Apply</button>
+                        </div>
+                        <div id="promo-message" class="promo-message"></div>
+                    </div>
+
+                    <!-- Checkout Button -->
+                    <button class="btn-checkout" onclick="proceedToCheckout()">
+                        ⚡ Proceed to Checkout
+                    </button>
+
+                    <!-- Security Info -->
+                    <div class="security-info">
+                        <div class="security-item">
+                            <span class="security-icon">🔒</span>
+                            <span>Secure Checkout</span>
+                        </div>
+                        <div class="security-item">
+                            <span class="security-icon">🛡️</span>
+                            <span>SSL Encrypted</span>
+                        </div>
+                        <div class="security-item">
+                            <span class="security-icon">💳</span>
+                            <span>Multiple Payment Options</span>
+                        </div>
+                    </div>
+
+                    <!-- Accepted Payments -->
+                    <div class="accepted-payments">
+                        <h4>Accepted Payment Methods</h4>
+                        <div class="payment-icons">
+                            <span class="payment-icon">💳</span>
+                            <span class="payment-icon">📱</span>
+                            <span class="payment-icon">🏦</span>
+                            <span class="payment-icon">💰</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommended Products -->
+            <section class="recommended-products">
+                <h2>You may also like</h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <img src="images/product4.jpg" alt="Smart Watch">
+                        <h3>Smart Watch Ultra</h3>
+                        <p class="price">₹4,999</p>
+                        <button class="btn-add-cart" onclick="addToCart(4)">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="images/product5.jpg" alt="T-Shirt">
+                        <h3>Cotton T-Shirt</h3>
+                        <p class="price">₹1,299</p>
+                        <button class="btn-add-cart" onclick="addToCart(5)">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="images/product6.jpg" alt="Jeans">
+                        <h3>Denim Jeans</h3>
+                        <p class="price">₹2,999</p>
+                        <button class="btn-add-cart" onclick="addToCart(6)">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="images/product7.jpg" alt="Kitchen Set">
+                        <h3>Kitchen utensil Set</h3>
+                        <p class="price">₹899</p>
+                        <button class="btn-add-cart" onclick="addToCart(7)">Add to Cart</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>मेरी दुकान</h3>
+                    <p>Your trusted online shopping destination</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 मेरी दुकान. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

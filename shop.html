@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - मेरी दुकान</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🛍️ मेरी दुकान</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">🏠 Home</a></li>
+                    <li><a href="shop.html" class="active">🛍 Shop</a></li>
+                    <li><a href="cart.html">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="user.html">👤 Account</a></li>
+                    <li><a href="admin.html">🔐 Admin</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="shop-layout">
+                <!-- Filters Sidebar -->
+                <aside class="filters">
+                    <h3>🔍 Filters</h3>
+                    
+                    <div class="filter-section">
+                        <h4>Price Range</h4>
+                        <div class="price-filter">
+                            <input type="number" id="min-price" placeholder="Min" min="0">
+                            <span>-</span>
+                            <input type="number" id="max-price" placeholder="Max" min="0">
+                            <button class="btn-filter" onclick="filterProducts()">Apply</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h4>Categories</h4>
+                        <div class="category-filters">
+                            <label><input type="checkbox" value="electronics"> Electronics</label>
+                            <label><input type="checkbox" value="fashion"> Fashion</label>
+                            <label><input type="checkbox" value="home"> Home & Kitchen</label>
+                            <label><input type="checkbox" value="beauty"> Beauty</label>
+                            <label><input type="checkbox" value="sports"> Sports</label>
+                            <label><input type="checkbox" value="books"> Books</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h4>Sort By</h4>
+                        <select id="sort-by" onchange="sortProducts()">
+                            <option value="default">Default</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name">Name: A to Z</option>
+                            <option value="rating">Best Rating</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-clear" onclick="clearFilters()">Clear All Filters</button>
+                </aside>
+
+                <!-- Products Grid -->
+                <section class="products-section">
+                    <div class="products-header">
+                        <h2>All Products</h2>
+                        <div class="view-options">
+                            <button class="view-btn active" onclick="setGridView()">🔲 Grid</button>
+                            <button class="view-btn" onclick="setListView()">☰ List</button>
+                        </div>
+                    </div>
+
+                    <div class="products-grid" id="products-grid">
+                        <!-- Product 1 -->
+                        <div class="product-card" data-category="electronics" data-price="15999">
+                            <img src="images/product1.jpg" alt="Smartphone">
+                            <div class="product-info">
+                                <h3>Smartphone Pro Max</h3>
+                                <div class="rating">⭐⭐⭐⭐⭐ (4.5)</div>
+                                <p class="price">₹15,999</p>
+                                <p class="old-price">₹20,000</p>
+                                <button class="btn-add-cart" onclick="addToCart(1)">Add to Cart</button>
+                                <button class="btn-view" onclick="viewProduct(1)">View Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Product 2 -->
+                        <div class="product-card" data-category="electronics" data-price="35999">
+                            <img src="images/product2.jpg" alt="Laptop">
+                            <div class="product-info">
+                                <h3>Gaming Laptop</h3>
+                                <div class="rating">⭐⭐⭐⭐⭐ (4.8)</div>
+                                <p class="price">₹35,999</p>
+                                <p class="old-price">₹45,000</p>
+                                <button class="btn-add-cart" onclick="addToCart(2)">Add to Cart</button>
+                                <button class="btn-view" onclick="viewProduct(2)">View Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Product 3 -->
+                        <div class="product-card" data-category="electronics" data-price="1999">
+                            <img src="images/product3.jpg" alt="Headphones">
+                            <div class="product-info">
+                                <h3>Wireless Headphones</h3>
+                                <div class="rating">⭐⭐⭐⭐ (4.2)</div>
+                                <p class="price">₹1,999</p>
+                                <p class="old-price">₹3,000</p>
+                                <button class="btn-add-cart" onclick="addToCart(3)">Add to Cart</button>
+                                <button class="btn-view" onclick="viewProduct(3)">View Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Product 4 -->
+                        <div class="product-card" data-category="electronics" data-price="4999">
+                            <img src="images/product4.jpg" alt="Smart Watch">
+                            <div class="product-info">
+                                <h3>Smart Watch Ultra</h3>
+                                <div class="rating">⭐⭐⭐⭐ (4.3)</div>
+                                <p class="price">₹4,999</p>
+                                <p class="old-price">₹7,000</p>
+                                <button class="btn-add-cart" onclick="addToCart(4)">Add to Cart</button>
+                                <button class="btn-view" onclick="viewProduct(4)">View Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Product 5 -->
+                        <div class="product-card" data-category="fashion" data-price="1299">
+                            <img src="images/product5.jpg" alt="T-Shirt">
+                            <div class="product-info">
+                                <h3>Cotton T-Shirt</h3>
+                                <div class="rating">⭐⭐⭐⭐ (4.0)</div>
+                                <p class="price">₹1,299</p>
+                                <p class="old-price">₹1,999</p>
+                                <button class="btn-add-cart" onclick="addToCart(5)">Add to Cart</button>
+                                <button class="btn-view" onclick="viewProduct(5)">View Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Product 6 -->
+                        <div class="product-card" data-category="fashion" data-price="2999">
+                            <img src="images/product6.jpg" alt="Jeans">
+                            <div class="product-info">
+                                <h3>Denim Jeans</h3>
+                                <div class="rating">⭐⭐⭐⭐⭐ (4.6)</div>
+                                <p class="price">₹2,999</p>
+                                <p class="old-price">₹4,500</p>
+                                <button class="btn-add-cart" onclick="addToCart(6)">Add to Cart</button>
+                                <button class="btn-view" onclick="viewProduct(6)">View Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Product 7 -->
+                        <div class="product-card" data-category="home" data-price="899">
+                            <img src="images/product7.jpg" alt="Kitchen Set">
+                            <div class="product-info">
+                                <h3>Kitchen utensil Set</h3>
+                                <div class="rating">⭐⭐⭐⭐ (4.1)</div>
+                                <p class="price">₹899</p>
+                                <p class="old-price">₹1,500</p>
+                                <button class="btn-add-cart" onclick="addToCart(7)">Add to Cart</button>
+                                <button class="btn-view" onclick="viewProduct(7)">View Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Product 8 -->
+                        <div class="product-card" data-category="beauty" data-price="599">
+                            <img src="images/product8.jpg" alt="Lipstick">
+                            <div class="product-info">
+                                <h3>Lipstick Set</h3>
+                                <div class="rating">⭐⭐⭐⭐ (4.4)</div>
+                                <p class="price">₹599</p>
+                                <p class="old-price">₹999</p>
+                                <button class="btn-add-cart" onclick="addToCart(8)">Add to Cart</button>
+                                <button class="btn-view" onclick="viewProduct(8)">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="page-btn" onclick="previousPage()">← Previous</button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn" onclick="nextPage()">Next →</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>मेरी दुकान</h3>
+                    <p>Your trusted online shopping destination</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 मेरी दुकान. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

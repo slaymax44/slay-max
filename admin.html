@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - मेरी दुकान</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>🛍️ मेरी दुकान</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">🏠 Home</a></li>
+                    <li><a href="shop.html">🛍 Shop</a></li>
+                    <li><a href="cart.html">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="user.html">👤 Account</a></li>
+                    <li><a href="admin.html" class="active">🔐 Admin</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Admin Login (Show if not logged in) -->
+            <div id="admin-login" class="admin-login">
+                <div class="login-card">
+                    <h2>🔐 Admin Login</h2>
+                    <form onsubmit="adminLogin(event)">
+                        <div class="form-group">
+                            <label for="admin-username">Username</label>
+                            <input type="text" id="admin-username" required placeholder="admin">
+                        </div>
+                        <div class="form-group">
+                            <label for="admin-password">Password</label>
+                            <input type="password" id="admin-password" required placeholder="password">
+                        </div>
+                        <button type="submit" class="btn-primary">Login</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Admin Dashboard (Show if logged in) -->
+            <div id="admin-dashboard" class="admin-dashboard" style="display: none;">
+                <div class="admin-layout">
+                    <!-- Admin Sidebar -->
+                    <aside class="admin-sidebar">
+                        <div class="admin-header">
+                            <h2>🔐 Admin Panel</h2>
+                            <p>Welcome, Admin</p>
+                        </div>
+                        
+                        <nav class="admin-nav">
+                            <ul>
+                                <li><a href="#dashboard" class="nav-link active" onclick="showAdminSection('dashboard')">📊 Dashboard</a></li>
+                                <li><a href="#products" class="nav-link" onclick="showAdminSection('products')">📦 Products</a></li>
+                                <li><a href="#orders" class="nav-link" onclick="showAdminSection('orders')">🛒 Orders</a></li>
+                                <li><a href="#users" class="nav-link" onclick="showAdminSection('users')">👥 Users</a></li>
+                                <li><a href="#categories" class="nav-link" onclick="showAdminSection('categories')">📁 Categories</a></li>
+                                <li><a href="#analytics" class="nav-link" onclick="showAdminSection('analytics')">📈 Analytics</a></li>
+                                <li><a href="#settings" class="nav-link" onclick="showAdminSection('settings')">⚙️ Settings</a></li>
+                                <li><a href="#logout" class="nav-link" onclick="adminLogout()">🚪 Logout</a></li>
+                            </ul>
+                        </nav>
+                    </aside>
+
+                    <!-- Admin Content -->
+                    <div class="admin-content">
+                        <!-- Dashboard Section -->
+                        <section id="admin-dashboard-section" class="admin-section active">
+                            <h2>📊 Admin Dashboard</h2>
+                            
+                            <div class="dashboard-stats">
+                                <div class="stat-card">
+                                    <div class="stat-icon">📦</div>
+                                    <div class="stat-info">
+                                        <h3>Total Products</h3>
+                                        <p class="stat-number">156</p>
+                                        <span class="stat-change positive">+12% from last month</span>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">🛒</div>
+                                    <div class="stat-info">
+                                        <h3>Total Orders</h3>
+                                        <p class="stat-number">1,234</p>
+                                        <span class="stat-change positive">+8% from last month</span>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">👥</div>
+                                    <div class="stat-info">
+                                        <h3>Total Users</h3>
+                                        <p class="stat-number">5,678</p>
+                                        <span class="stat-change positive">+15% from last month</span>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">💰</div>
+                                    <div class="stat-info">
+                                        <h3>Total Revenue</h3>
+                                        <p class="stat-number">₹12,34,567</p>
+                                        <span class="stat-change positive">+23% from last month</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dashboard-charts">
+                                <div class="chart-container">
+                                    <h3>Recent Orders</h3>
+                                    <div class="recent-orders-list">
+                                        <div class="order-row">
+                                            <span>ORD-2024-001</span>
+                                            <span>Rahul Sharma</span>
+                                            <span>₹15,999</span>
+                                            <span class="status delivered">Delivered</span>
+                                        </div>
+                                        <div class="order-row">
+                                            <span>ORD-2024-002</span>
+                                            <span>Priya Patel</span>
+                                            <span>₹35,999</span>
+                                            <span class="status processing">Processing</span>
+                                        </div>
+                                        <div class="order-row">
+                                            <span>ORD-2024-003</span>
+                                            <span>Amit Kumar</span>
+                                            <span>₹8,997</span>
+                                            <span class="status shipped">Shipped</span>
+                                        </div>
+                                        <div class="order-row">
+                                            <span>ORD-2024-004</span>
+                                            <span>Neha Singh</span>
+                                            <span>₹4,999</span>
+                                            <span class="status pending">Pending</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="chart-container">
+                                    <h3>Top Products</h3>
+                                    <div class="top-products-list">
+                                        <div class="product-row">
+                                            <span>Smartphone Pro Max</span>
+                                            <span>45 sold</span>
+                                            <span>₹7,19,955</span>
+                                        </div>
+                                        <div class="product-row">
+                                            <span>Gaming Laptop</span>
+                                            <span>23 sold</span>
+                                            <span>₹8,27,977</span>
+                                        </div>
+                                        <div class="product-row">
+                                            <span>Wireless Headphones</span>
+                                            <span>67 sold</span>
+                                            <span>₹1,33,933</span>
+                                        </div>
+                                        <div class="product-row">
+                                            <span>Smart Watch Ultra</span>
+                                            <span>34 sold</span>
+                                            <span>₹1,69,966</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Products Section -->
+                        <section id="admin-products-section" class="admin-section">
+                            <div class="section-header">
+                                <h2>📦 Products Management</h2>
+                                <button class="btn-primary" onclick="showAddProductForm()">+ Add New Product</button>
+                            </div>
+
+                            <div class="products-filter">
+                                <input type="text" placeholder="Search products..." id="product-search">
+                                <select id="category-filter">
+                                    <option value="">All Categories</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="fashion">Fashion</option>
+                                    <option value="home">Home & Kitchen</option>
+                                    <option value="beauty">Beauty</option>
+                                </select>
+                                <select id="status-filter">
+                                    <option value="">All Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="out-of-stock">Out of Stock</option>
+                                </select>
+                            </div>
+
+                            <div class="products-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Product Name</th>
+                                            <th>Category</th>
+                                            <th>Price</th>
+                                            <th>Stock</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><img src="images/product1.jpg" alt="Product" class="product-thumb"></td>
+                                            <td>Smartphone Pro Max</td>
+                                            <td>Electronics</td>
+                                            <td>₹15,999</td>
+                                            <td>45</td>
+                                            <td><span class="status active">Active</span></td>
+                                            <td>
+                                                <button class="btn-edit" onclick="editProduct(1)">✏️</button>
+                                                <button class="btn-delete" onclick="deleteProduct(1)">🗑️</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="images/product2.jpg" alt="Product" class="product-thumb"></td>
+                                            <td>Gaming Laptop</td>
+                                            <td>Electronics</td>
+                                            <td>₹35,999</td>
+                                            <td>12</td>
+                                            <td><span class="status active">Active</span></td>
+                                            <td>
+                                                <button class="btn-edit" onclick="editProduct(2)">✏️</button>
+                                                <button class="btn-delete" onclick="deleteProduct(2)">🗑️</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="images/product3.jpg" alt="Product" class="product-thumb"></td>
+                                            <td>Wireless Headphones</td>
+                                            <td>Electronics</td>
+                                            <td>₹1,999</td>
+                                            <td>0</td>
+                                            <td><span class="status out-of-stock">Out of Stock</span></td>
+                                            <td>
+                                                <button class="btn-edit" onclick="editProduct(3)">✏️</button>
+                                                <button class="btn-delete" onclick="deleteProduct(3)">🗑️</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="images/product4.jpg" alt="Product" class="product-thumb"></td>
+                                            <td>Smart Watch Ultra</td>
+                                            <td>Electronics</td>
+                                            <td>₹4,999</td>
+                                            <td>28</td>
+                                            <td><span class="status active">Active</span></td>
+                                            <td>
+                                                <button class="btn-edit" onclick="editProduct(4)">✏️</button>
+                                                <button class="btn-delete" onclick="deleteProduct(4)">🗑️</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <!-- Orders Section -->
+                        <section id="admin-orders-section" class="admin-section">
+                            <div class="section-header">
+                                <h2>🛒 Orders Management</h2>
+                                <div class="orders-filter">
+                                    <select id="order-status-filter">
+                                        <option value="">All Status</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="processing">Processing</option>
+                                        <option value="shipped">Shipped</option>
+                                        <option value="delivered">Delivered</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="orders-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Customer</th>
+                                            <th>Date</th>
+                                            <th>Items</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>ORD-2024-001</td>
+                                            <td>Rahul Sharma</td>
+                                            <td>Mar 1, 2024</td>
+                                            <td>1</td>
+                                            <td>₹15,999</td>
+                                            <td><span class="status delivered">Delivered</span></td>
+                                            <td>
+                                                <button class="btn-view" onclick="viewOrderDetails('ORD-2024-001')">👁️</button>
+                                                <button class="btn-edit" onclick="updateOrderStatus('ORD-2024-001')">✏️</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ORD-2024-002</td>
+                                            <td>Priya Patel</td>
+                                            <td>Mar 3, 2024</td>
+                                            <td>1</td>
+                                            <td>₹35,999</td>
+                                            <td><span class="status processing">Processing</span></td>
+                                            <td>
+                                                <button class="btn-view" onclick="viewOrderDetails('ORD-2024-002')">👁️</button>
+                                                <button class="btn-edit" onclick="updateOrderStatus('ORD-2024-002')">✏️</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ORD-2024-003</td>
+                                            <td>Amit Kumar</td>
+                                            <td>Mar 5, 2024</td>
+                                            <td>2</td>
+                                            <td>₹3,998</td>
+                                            <td><span class="status shipped">Shipped</span></td>
+                                            <td>
+                                                <button class="btn-view" onclick="viewOrderDetails('ORD-2024-003')">👁️</button>
+                                                <button class="btn-edit" onclick="updateOrderStatus('ORD-2024-003')">✏️</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <!-- Users Section -->
+                        <section id="admin-users-section" class="admin-section">
+                            <div class="section-header">
+                                <h2>👥 Users Management</h2>
+                                <button class="btn-primary" onclick="exportUsers()">📥 Export Users</button>
+                            </div>
+
+                            <div class="users-filter">
+                                <input type="text" placeholder="Search users..." id="user-search">
+                                <select id="user-status-filter">
+                                    <option value="">All Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="banned">Banned</option>
+                                </select>
+                            </div>
+
+                            <div class="users-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>User ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>Orders</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>#001</td>
+                                            <td>Rahul Sharma</td>
+                                            <td>rahul.sharma@email.com</td>
+                                            <td>+91 98765 43210</td>
+                                            <td>12</td>
+                                            <td><span class="status active">Active</span></td>
+                                            <td>
+                                                <button class="btn-view" onclick="viewUserDetails(1)">👁️</button>
+                                                <button class="btn-edit" onclick="editUser(1)">✏️</button>
+                                                <button class="btn-ban" onclick="banUser(1)">🚫</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#002</td>
+                                            <td>Priya Patel</td>
+                                            <td>priya.patel@email.com</td>
+                                            <td>+91 98765 54321</td>
+                                            <td>8</td>
+                                            <td><span class="status active">Active</span></td>
+                                            <td>
+                                                <button class="btn-view" onclick="viewUserDetails(2)">👁️</button>
+                                                <button class="btn-edit" onclick="editUser(2)">✏️</button>
+                                                <button class="btn-ban" onclick="banUser(2)">🚫</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#003</td>
+                                            <td>Amit Kumar</td>
+                                            <td>amit.kumar@email.com</td>
+                                            <td>+91 98765 65432</td>
+                                            <td>5</td>
+                                            <td><span class="status inactive">Inactive</span></td>
+                                            <td>
+                                                <button class="btn-view" onclick="viewUserDetails(3)">👁️</button>
+                                                <button class="btn-edit" onclick="editUser(3)">✏️</button>
+                                                <button class="btn-ban" onclick="banUser(3)">🚫</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <!-- Categories Section -->
+                        <section id="admin-categories-section" class="admin-section">
+                            <div class="section-header">
+                                <h2>📁 Categories Management</h2>
+                                <button class="btn-primary" onclick="showAddCategoryForm()">+ Add New Category</button>
+                            </div>
+
+                            <div class="categories-grid">
+                                <div class="category-card">
+                                    <div class="category-icon">📱</div>
+                                    <div class="category-info">
+                                        <h3>Electronics</h3>
+                                        <p>45 products</p>
+                                    </div>
+                                    <div class="category-actions">
+                                        <button class="btn-edit" onclick="editCategory(1)">✏️</button>
+                                        <button class="btn-delete" onclick="deleteCategory(1)">🗑️</button>
+                                    </div>
+                                </div>
+                                <div class="category-card">
+                                    <div class="category-icon">👕</div>
+                                    <div class="category-info">
+                                        <h3>Fashion</h3>
+                                        <p>32 products</p>
+                                    </div>
+                                    <div class="category-actions">
+                                        <button class="btn-edit" onclick="editCategory(2)">✏️</button>
+                                        <button class="btn-delete" onclick="deleteCategory(2)">🗑️</button>
+                                    </div>
+                                </div>
+                                <div class="category-card">
+                                    <div class="category-icon">🏠</div>
+                                    <div class="category-info">
+                                        <h3>Home & Kitchen</h3>
+                                        <p>28 products</p>
+                                    </div>
+                                    <div class="category-actions">
+                                        <button class="btn-edit" onclick="editCategory(3)">✏️</button>
+                                        <button class="btn-delete" onclick="deleteCategory(3)">🗑️</button>
+                                    </div>
+                                </div>
+                                <div class="category-card">
+                                    <div class="category-icon">💄</div>
+                                    <div class="category-info">
+                                        <h3>Beauty</h3>
+                                        <p>18 products</p>
+                                    </div>
+                                    <div class="category-actions">
+                                        <button class="btn-edit" onclick="editCategory(4)">✏️</button>
+                                        <button class="btn-delete" onclick="deleteCategory(4)">🗑️</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Analytics Section -->
+                        <section id="admin-analytics-section" class="admin-section">
+                            <h2>📈 Analytics & Reports</h2>
+                            
+                            <div class="analytics-filters">
+                                <select id="time-period">
+                                    <option value="7days">Last 7 Days</option>
+                                    <option value="30days">Last 30 Days</option>
+                                    <option value="90days">Last 90 Days</option>
+                                    <option value="1year">Last Year</option>
+                                </select>
+                                <button class="btn-secondary" onclick="generateReport()">Generate Report</button>
+                            </div>
+
+                            <div class="analytics-cards">
+                                <div class="analytics-card">
+                                    <h3>Sales Overview</h3>
+                                    <div class="chart-placeholder">
+                                        <p>📊 Sales chart will be displayed here</p>
+                                    </div>
+                                </div>
+                                <div class="analytics-card">
+                                    <h3>Top Categories</h3>
+                                    <div class="chart-placeholder">
+                                        <p>📈 Category performance chart</p>
+                                    </div>
+                                </div>
+                                <div class="analytics-card">
+                                    <h3>Customer Growth</h3>
+                                    <div class="chart-placeholder">
+                                        <p>👥 User registration trends</p>
+                                    </div>
+                                </div>
+                                <div class="analytics-card">
+                                    <h3>Revenue Trends</h3>
+                                    <div class="chart-placeholder">
+                                        <p>💰 Revenue over time</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Settings Section -->
+                        <section id="admin-settings-section" class="admin-section">
+                            <h2>⚙️ Admin Settings</h2>
+                            
+                            <div class="settings-groups">
+                                <div class="settings-group">
+                                    <h3>Store Settings</h3>
+                                    <div class="setting-item">
+                                        <label for="store-name">Store Name</label>
+                                        <input type="text" id="store-name" value="मेरी दुकान">
+                                    </div>
+                                    <div class="setting-item">
+                                        <label for="store-email">Store Email</label>
+                                        <input type="email" id="store-email" value="support@meridukaan.com">
+                                    </div>
+                                    <div class="setting-item">
+                                        <label for="store-phone">Store Phone</label>
+                                        <input type="tel" id="store-phone" value="1800-123-4567">
+                                    </div>
+                                </div>
+
+                                <div class="settings-group">
+                                    <h3>Payment Settings</h3>
+                                    <div class="setting-item">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span class="checkmark"></span>
+                                            Enable Cash on Delivery (COD)
+                                        </label>
+                                    </div>
+                                    <div class="setting-item">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox">
+                                            <span class="checkmark"></span>
+                                            Enable Online Payments
+                                        </label>
+                                    </div>
+                                    <div class="setting-item">
+                                        <label for="shipping-fee">Default Shipping Fee</label>
+                                        <input type="number" id="shipping-fee" value="0">
+                                    </div>
+                                </div>
+
+                                <div class="settings-group">
+                                    <h3>Tax Settings</h3>
+                                    <div class="setting-item">
+                                        <label for="tax-rate">Tax Rate (%)</label>
+                                        <input type="number" id="tax-rate" value="18" min="0" max="100">
+                                    </div>
+                                    <div class="setting-item">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span class="checkmark"></span>
+                                            Include tax in product prices
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="settings-actions">
+                                <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
+                                <button class="btn-secondary" onclick="resetSettings()">Reset to Default</button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>मेरी दुकान</h3>
+                    <p>Your trusted online shopping destination</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 मेरी दुकान. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
